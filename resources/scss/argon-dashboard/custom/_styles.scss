@@ -1,0 +1,53 @@
+.btn {
+    margin: 0;
+}
+.card-sm {
+    box-shadow: 0 0 0.5rem 0 #eee !important;
+}
+textarea {
+    resize: none;
+}
+
+input[type="number"] {
+    appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#btn-to-top {
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}
+.btn-circle {
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.text-gold {
+    color: #ffd700 !important;
+}
+.text-silver {
+    color: #c0c0c0 !important;
+}
+.text-bronze {
+    color: #cd7f32 !important;
+}
+
+.lightbox-trigger {
+    height: 15rem;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.img-trigger {
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+}
