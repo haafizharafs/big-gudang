@@ -41,7 +41,6 @@
         scanner.render(success, error);
 
         function success(result) {
-            sessionStorage.setItem('dataFromScan', result);
             var routeUrl = "{{ route('indexMutasi') }}";
 
             document.getElementById('result').innerHTML = `

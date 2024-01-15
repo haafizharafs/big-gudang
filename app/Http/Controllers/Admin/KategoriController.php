@@ -36,10 +36,13 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'=>'required',
+            'edit_nama'=>'required|unique:kategoris,nama',
+        ], [
+            'edit_nama.required' => 'Nama Kategori wajib diisi',
+            'edit_nama.unique' => 'Kategori telah terdaftar!',
         ]);
         $kategori = Kategori::where('id', $id)->first();
-        $kategori->nama = $request->nama;
+        $kategori->nama = $request->edit_nama;
         $kategori->save();
 
         Alert::success('Berhasil',"Kategori $request->nama berhasil diedit");

@@ -36,10 +36,13 @@ class SatuanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'=>'required',
+            'edit_nama' => 'required|unique:satuans,nama',
+        ], [
+            'edit_nama.required' => 'Nama Satuan wajib diisi!',
+            'edit_nama.unique' => 'Satuan telah terdaftar!',
         ]);
         $satuan = Satuan::where('id', $id)->first();
-        $satuan->nama = $request->nama;
+        $satuan->nama = $request->edit_nama;
         $satuan->save();
 
         Alert::success('Berhasil',"Satuan $request->nama berhasil diedit");

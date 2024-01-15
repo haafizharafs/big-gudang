@@ -121,9 +121,9 @@
             <div class="d-flex align-items-sm-center flex-column flex-sm-row gap-1">
                 <h6 class="m-0 lh-1">Daftar Data Barang</h6>
             </div>
-            <button type="button" class="btn bg-gradient-danger btn-md" onclick="bukaModalTambahBarang()">
+            {{-- <button type="button" class="btn bg-gradient-danger btn-md" onclick="bukaModalTambahBarang()">
                 Tambah Barang
-            </button>
+            </button> --}}
         </div>
         <div class="card-body">
             <div class="card-text float-end">
@@ -135,6 +135,14 @@
                 </a>
             </div>
         </div>
+
+        <script>
+            @if ($errors->has('edit_kode') || $errors->has('edit_serial') || $errors->has('edit_nama') || $errors->has('edit_jumlah'))
+                $(document).ready(function () {
+                    $('#modalEditBarang').modal('show');
+                });
+            @endif
+        </script>
 
         <!-- Modal Tambah Barang-->
         <div class="modal fade" id="modalTambahBarang" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
@@ -324,27 +332,39 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="kodeBarang" class="form-label">Kode: </label>
-                                                        <input type="text" class="form-control" id="kodeBarang" name="kode"
+                                                        <input type="text" class="form-control" id="kodeBarang" name="edit_kode"
                                                             value="">
+                                                        @error('edit_kode')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="serialBarang" class="form-label">SN: </label>
-                                                        <input type="text" class="form-control" id="serialBarang" name="serial"
+                                                        <input type="text" class="form-control" id="serialBarang" name="edit_serial"
                                                             value="">
+                                                        @error('edit_serial')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="namaBarang" class="form-label">Nama Barang: </label>
-                                                        <input type="text" class="form-control" id="namaBarang" name="nama"
+                                                        <input type="text" class="form-control" id="namaBarang" name="edit_nama"
                                                             value="">
+                                                        @error('edit_nama')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="jumlahBarang" class="form-label">Jumlah: </label>
-                                                        <input type="text" class="form-control" id="jumlahBarang" name="jumlah"
+                                                        <input type="text" class="form-control" id="jumlahBarang" name="edit_jumlah"
                                                             value="">
+                                                        @error('edit_jumlah')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </form>

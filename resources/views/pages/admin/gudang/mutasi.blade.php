@@ -134,7 +134,8 @@
                         <div class="d-flex align-items-sm-center flex-column flex-sm-row gap-1">
                             <h6 class="m-0 lh-1">Daftar Data Mutasi Masuk</h6>
                         </div>
-                        <button type="button" class="btn bg-gradient-danger btn-md" onclick="bukaModalTambahMutasiMasuk()">
+                        <button type="button" class="btn bg-gradient-danger btn-md" data-bs-toggle="modal"
+                        data-bs-target="#modalTambahMutasiMasuk">
                             Tambah Mutasi Masuk
                         </button>
                     </div>
@@ -194,33 +195,33 @@
                                                             <div class="modal-body">
                                                                 <div class="form-group">
                                                                     <label for="kodeBarang" class="form-label">Kode: </label>
-                                                                    <input type="text" class="form-control" id="kodeBarang" name="kode"
+                                                                    <input type="text" class="form-control" id="kodeBarang" name="edit_kode"
                                                                         value="">
-                                                                    @error('kode')
+                                                                    @error('edit_kode')
                                                                         <small class="text-danger">{{ $message }}</small>
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="serialBarang" class="form-label">SN: </label>
-                                                                    <input type="text" class="form-control" id="serialBarang" name="serial_number"
+                                                                    <input type="text" class="form-control" id="serialBarang" name="edit_serial"
                                                                         value="">
-                                                                    @error('serial_number')
+                                                                    @error('edit_serial')
                                                                         <small class="text-danger">{{ $message }}</small>
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="namaBarang" class="form-label">Nama Barang: </label>
-                                                                    <input type="text" class="form-control" id="namaBarang" name="nama"
+                                                                    <input type="text" class="form-control" id="namaBarang" name="edit_nama"
                                                                         value="">
-                                                                    @error('nama')
+                                                                    @error('edit_nama')
                                                                         <small class="text-danger">{{ $message }}</small>
                                                                     @enderror
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="jumlahBarang" class="form-label">Jumlah: </label>
-                                                                    <input type="text" class="form-control" id="jumlahBarang" name="jumlah"
+                                                                    <input type="text" class="form-control" id="jumlahBarang" name="edit_jumlah"
                                                                         value="">
-                                                                    @error('jumlah')
+                                                                    @error('edit_jumlah')
                                                                         <small class="text-danger">{{ $message }}</small>
                                                                     @enderror
                                                                 </div>
@@ -234,7 +235,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Modal Hapus Barang -->
+                                            <!-- Modal Hapus Mutasi Masuk -->
                                             <div class="modal fade" id="modalDeleteMutasiMasuk{{ $barang->id }}" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -299,7 +300,6 @@
                                         <th>Tujuan</th>
                                         <th>Jumlah</th>
                                         <th>Waktu</th>
-                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -311,38 +311,6 @@
                                         <td>{{$keluar->tujuan}}</td>
                                         <td>{{$keluar->jumlah}}</td>
                                         <td>{{$keluar->updated_at}}</td>
-                                        <td>
-                                            <!-- Button Hapus Mutasi Keluar -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#modalDeleteMutasi{{ $keluar->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-
-                                            <!-- Modal Hapus Mutasi Keluar -->
-                                            <div class="modal fade" id="modalDeleteMutasi{{ $keluar->id }}" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Peringatan!!!</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Yakin Ingin Menghapus Mutasi Keluar ke-{{ $loop->iteration }}?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary me-2"
-                                                                data-bs-dismiss="modal">Batal</button>
-                                                            <form action="{{ route('hapusKeluar', $keluar->id) }}" method="post">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-primary">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -354,7 +322,6 @@
                                         <th>Tujuan</th>
                                         <th>Jumlah</th>
                                         <th>Waktu</th>
-                                        <th>Opsi</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -449,13 +416,19 @@
     </div>
 </div>
 
-@if ($errors->any())
-    <script>
-        $(document).ready(function() {
+<script>
+    @if ($errors->has('edit_kode') || $errors->has('edit_serial') || $errors->has('edit_nama') || $errors->has('edit_jumlah'))
+        $(document).ready(function () {
+            $('#modalEditMutasiMasuk').modal('show');
+        });
+    @endif
+
+    @if ($errors->has('kode') || $errors->has('kategori_id') || $errors->has('serial_number') || $errors->has('nama') || $errors->has('gudang_id') || $errors->has('satuan_id') || $errors->has('jumlah'))
+        $(document).ready(function () {
             $('#modalTambahMutasiMasuk').modal('show');
         });
-    </script>
-@endif
+    @endif
+</script>
 
 
 <!-- Modal Tambah Mutasi Masuk-->
@@ -604,7 +577,7 @@ aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Tambah Mutasi Keluar</h5>
+            <h5 class="modal-title">Tambah Mutasi Kembali   </h5>
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -663,7 +636,7 @@ aria-hidden="true">
             $('#table2').DataTable({
             //disable sorting on last column
             "columnDefs": [
-                { "orderable": false, "targets": 6 }
+                { "orderable": false, "targets": 5 }
             ],
             language: {
                 //customize pagination prev and next buttons: use arrows instead of words
@@ -734,24 +707,4 @@ aria-hidden="true">
         document.querySelector('#modalEditMutasiMasuk #namaBarang').value = namaBarang
         document.querySelector('#modalEditMutasiMasuk #jumlahBarang').value = jumlahBarang
     }
-
-    function bukaModalTambahMutasiMasuk() {
-    // Mengambil nilai dari sessionStorage
-    var dataFromScan = sessionStorage.getItem('dataFromScan');
-
-    // Mengisi field pada modal dengan nilai dari sessionStorage
-    document.getElementById('serialBarang').value = dataFromScan;
-
-    // Menampilkan modal dengan ID modalTambahBarang
-    $('#modalTambahMutasiMasuk').modal('show');
-    }
-
-    //scanner
-    function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-    }
-    var html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader", { fps: 24, qrbox: 250 }
-    );
-    html5QrcodeScanner.render(onScanSuccess);
 </script>

@@ -109,13 +109,19 @@
             </button>
         </div>
 
-        @if ($errors->any())
-            <script>
-                $(document).ready(function() {
+        <script>
+            @if ($errors->has('edit_nama'))
+                $(document).ready(function () {
+                    $('#modalEditSatuan').modal('show');
+                });
+            @endif
+
+            @if ($errors->has('nama'))
+                $(document).ready(function () {
                     $('#modalTambahSatuan').modal('show');
                 });
-            </script>
-        @endif
+            @endif
+        </script>
 
         <!-- Modal Tambah Satuan-->
         <div class="modal fade" id="modalTambahSatuan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
@@ -192,8 +198,11 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="namaSatuan" class="form-label">Nama Satuan: </label>
-                                                        <input type="text" class="form-control" id="namaSatuan" name="nama"
+                                                        <input type="text" class="form-control" id="namaSatuan" name="edit_nama"
                                                             value="">
+                                                        @error('edit_nama')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">

@@ -65,21 +65,21 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kode' => 'required',
-            'serial_number' => 'nullable',
-            'nama' => 'required',
-            'jumlah' => 'required|numeric',
+            'edit_kode' => 'required',
+            'edit_serial' => 'nullable',
+            'edit_nama' => 'required',
+            'edit_jumlah' => 'required|numeric',
         ], [
-            'kode.required' => 'Kode wajib diisi!',
-            'nama.required' => 'Nama Barang wajib diisi!',
-            'jumlah.required' => 'Jumlah wajib diisi!',
-            'jumlah.numeric' => 'Jumlah wajib berupa angka!',
+            'edit_kode.required' => 'Kode wajib diisi!',
+            'edit_nama.required' => 'Nama Barang wajib diisi!',
+            'edit_jumlah.required' => 'Jumlah wajib diisi!',
+            'edit_jumlah.numeric' => 'Jumlah wajib berupa angka!',
         ]);
         $barang = Barang::where('id', $id)->first();
-        $barang->kode = $request->kode;
-        $barang->serial_number = $request->serial;
-        $barang->nama = $request->nama;
-        $barang->jumlah = $request->jumlah;
+        $barang->kode = $request->edit_kode;
+        $barang->serial_number = $request->edit_serial;
+        $barang->nama = $request->edit_nama;
+        $barang->jumlah = $request->edit_jumlah;
         $barang->save();
 
         Alert::success('Berhasil',"Barang $request->nama berhasil diedit");
